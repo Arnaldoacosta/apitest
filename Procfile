@@ -1,1 +1,1 @@
-flask run
+web: funicorn app:app 
