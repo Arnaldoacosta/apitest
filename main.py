@@ -7,7 +7,7 @@ def create_app():
 
 app = create_app()
 
-app.route('/api/v1/users', methods=['GET'])
+@app.route('/api/v1/users', methods=['GET'])
 def get_users():
     response = {'message': 'success'}
     return jsonify(response)
