@@ -13,7 +13,7 @@ def get_users():
     return jsonify(response)
 
 @app.route('/metodo', methods=['GET'])
-def get_users():
+def get_metodo():
     response = {'message': 'probando2'}
     return jsonify(response)
 
