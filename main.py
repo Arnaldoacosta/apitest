@@ -58,9 +58,9 @@ def deleteNotaMateria(id):
 def imprimirJson():
     return 'yes base de datos'
 
-@app.route("/test")
-def imprimirJson2():
-    return 'yes base de datos'
+@app.route("/metodo")
+def metodo():
+    return 'yes metodo2'
 
 @app.route("/TestapiExterna")
 def testApiExterna():
