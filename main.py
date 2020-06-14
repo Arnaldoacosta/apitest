@@ -17,6 +17,12 @@ def get_metodo():
     response = {'message': 'probando2'}
     return jsonify(response)
 
+@app.route('/metodo2', methods=['GET'])
+def get_metodo2():
+    response = {'message': 'probando2'}
+    return jsonify(response)
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
