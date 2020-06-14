@@ -13,7 +13,7 @@ def create_app():
 
 app = create_app()
 
-db = SQLAlchemy(app)
+base= SQLAlchemy(app)
 
 @app.route('/test', methods=['GET'])
 def get_users():
