@@ -1,13 +1,5 @@
-
-from flask import Flask, request, jsonify, Response
-from flask_sqlalchemy import SQLAlchemy
-import json
-from flask_api import status
-import requests
-import os
-
-#app = Flask(__name__)
-
+from flask import Flask
+from flask import jsonify
 
 def create_app():
     app = Flask(__name__)
@@ -15,16 +7,16 @@ def create_app():
 
 app = create_app()
 
+@app.route('/test', methods=['GET'])
+def get_users():
+    response = {'message': 'probando'}
+    return jsonify(response)
 
-@app.route("/test")
-def imprimirJson():
-    return 'yes base de datos'
-
-@app.route("/metodo")
-def metodo():
-    return 'yes metodo2'
+@app.route('/metodo', methods=['GET'])
+def get_metodo():
+    response = {'message': 'probando2'}
+    return jsonify(response)
 
 
 if __name__ == '__main__':
-    app.run(debug=False)
-
+    app.run(debug=True)
