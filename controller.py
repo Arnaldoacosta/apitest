@@ -20,12 +20,6 @@ def create_app():
 
 app = create_app()
 
-#app.config.from_object(os.environ['APP_SETTINGS'])
-#app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:Ingreso871@localhost/Irso"
-#app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://rmnyfgzfbjbygy:4843aa6bd5f1683b39b934750c6b4475b311e244179a3ca4033fff37896029c4@ec2-34-232-147-86.compute-1.amazonaws.com/da384a5ispvhh0"
-#app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-#app.config.from_object(config[env_name])
-
 
 db = SQLAlchemy(app)
 
@@ -62,9 +56,6 @@ def deleteNotaMateria(id):
 
 @app.route("/test")
 def imprimirJson():
-    variable_test= os.environ.get('HOME')
-    print(os.getcwd())
-    print(variable_test)
     return 'yes base de datos'
 
 @app.route("/TestapiExterna")
