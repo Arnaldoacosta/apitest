@@ -1,7 +1,7 @@
 from Modelo.model_notasMaterias import NotaMateria
 from flask import jsonify
 import json
-from controller import Response
+from main import Response
 from flask_api import FlaskAPI, status
 from Servicio.Exception_api import *
 import requests
@@ -18,8 +18,6 @@ def addNotaMateria(request):
     except Exception as identifier:
         raise InternalServerError('Error relacionado con base de datos.', CodeInternalError.ERROR_INTERNAL_11_CONEXION_BD)       
     
-    
-    '''return "Materia agregarda. id={}".format(notamateria.notamateria_id)'''
 
 #get
 def findNotasMateriasByAlumnoID(id):
