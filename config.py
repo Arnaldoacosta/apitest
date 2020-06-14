@@ -1,11 +1,16 @@
-class Config:
-    pass
+import os
+basedir = os.path.abspath(os.path.dirname(__file__))
 
-class DevelopmentConfig(Config):
-    DEBUG = True
-    SQLALCHEMY_DATABASE_URI = 'postgresql://localhost/users'
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
+class Production(object):
+    """
+    Production environment configurations
+    """
+    DEBUG = False
+    TESTING = False
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
+    SQLALCHEMY_TRACK_MODIFICATIONS= False
+    #JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY')
 
-config = {
-    'development': DevelopmentConfig,
+app_config = {
+    'production': Production,
 }
