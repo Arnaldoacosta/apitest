@@ -27,8 +27,13 @@ def get_metodo2():
 
 
 @app.route("/test2")
-def imprimirJson():
+def imprimirJson2():
     return 'yes base de datos'
+
+@app.route("/test3")
+def imprimirJson3():
+    return 'yes base de datos 3'
+
 
 
 if __name__ == '__main__':
