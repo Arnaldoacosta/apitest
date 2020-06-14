@@ -6,7 +6,7 @@ from config import Production
 import requests
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__) 
     app.config.from_object(Production)
     return app
 
