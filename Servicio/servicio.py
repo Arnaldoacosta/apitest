@@ -1,12 +1,11 @@
 from Modelo.model_notasMaterias import NotaMateria
 from flask import jsonify
 import json
-from main import Response
+from controller import Response
 from flask_api import FlaskAPI, status
 from Servicio.Exception_api import *
 import requests
 from Servicio.Internal_errors import CodeInternalError
-
 
 
 #add notaMateria
@@ -37,9 +36,16 @@ def findNotasMateriasByAlumnoID(id):
 
 # Get all NotasMaterias
 def getNotasMaterias():
-    materias=NotaMateria.buscarNotasMaterias()
-    json_Str=jsonify([e.serializar() for e in materias]) 
-    return json_Str
+    #materias=NotaMateria.buscarNotasMaterias()
+    #json_Str=jsonify([e.serializar() for e in materias]) 
+    #return json_Str
+    page=NotaMateria.buscarNotasMaterias()
+    final_list = []
+    for element in page:
+        final_list.append(element)
+    return jsonify(final_list), status_code
+
+    
 
 #Update
 def updateNotaMateria(request): 
@@ -108,8 +114,19 @@ def setNotaMateria(request):
         )
     except Exception as identifier:
         raise BadResquest('Estructa de Json incorrecta',CodeInternalError.ERROR_INTERNAL_10_JSON_BAD_FORMED)
-    return notamateria   
+    return notamateria
+       
 
+       
+#def setMessajeFormatJson():
+#    return ({'detail':'Estructura json no soportada'},status.HTTP_400_BAD_REQUEST)
+#
+
+def imprimirJson():
+    notamateria = NotaMateria('11','estadistica','10') 
+    json_data = json.dumps(notamateria) 
+    print (json_data)
+    return (json_data)
 
 
 
