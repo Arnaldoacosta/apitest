@@ -5,6 +5,7 @@ from Servicio import servicio
 from config import Production
 import requests
 from Modelo.model_notasMaterias import db
+from Servicio.Exception_api import ApiExceptionServ
 
 
 
@@ -42,6 +43,12 @@ def deleteNotaMateria(id):
 def updateNotaMateria():
     return (servicio.updateNotaMateria(request))
 
+
+@app.errorhandler(ApiExceptionServ)
+def handle_invalid_usage(error):
+    response = jsonify(error.to_dict())
+    response.status_code = error.status_code
+    return response
 
 
 if __name__ == '__main__':
