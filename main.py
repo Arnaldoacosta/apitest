@@ -1,7 +1,7 @@
 from flask import Flask, request, Response
 from flask import jsonify
 from flask_sqlalchemy import SQLAlchemy
-from Servicio import servicio as serv
+from Servicio import servicio
 from config import Production
 import requests
 
@@ -24,13 +24,9 @@ def get_metodo():
     response = {'message': 'probando2'}
     return jsonify(response)
 
-
-''''*** INI NotaMateria *** '''
-
-#  Add subject
-@app.route('/materia', methods=['POST'])
-def addNotaMateria():  
-    return (serv.addNotaMateria(request))
+@app.route('/materias/<int:id>', methods=['GET'])
+def findNotasMateriasByAlumnoID(id):      
+        return (servicio.findNotasMateriasByAlumnoID(str(id)))
 
 
 

@@ -1,5 +1,4 @@
 from main import db
-from sqlalchemy import func
 
 class NotaMateria(db.Model):
     __tablename__ = 'notamateria'
