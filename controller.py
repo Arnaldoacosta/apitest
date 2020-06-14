@@ -58,6 +58,10 @@ def deleteNotaMateria(id):
 def imprimirJson():
     return 'yes base de datos'
 
+@app.route("/test")
+def imprimirJson2():
+    return 'yes base de datos'
+
 @app.route("/TestapiExterna")
 def testApiExterna():
     url='https://api.met.no/weatherapi/airqualityforecast/0.1/aqi_description'
