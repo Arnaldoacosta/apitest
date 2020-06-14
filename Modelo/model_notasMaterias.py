@@ -1,4 +1,4 @@
-from controller import db
+from main import db
 from sqlalchemy import func
 
 class NotaMateria(db.Model):
