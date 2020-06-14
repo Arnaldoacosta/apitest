@@ -20,7 +20,7 @@ db.init_app(app)
 
 @app.route('/test', methods=['GET'])
 def get_users():
-    response = {'message': 'metodo de test para asegurarse que esta funcionado.'}
+    response = {'message': 'Hola Elu :), como estas?. Odio phyton :( ...'}
     return jsonify(response)
 
 #GET subject for AlumnoID
