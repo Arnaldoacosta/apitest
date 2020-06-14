@@ -1,4 +1,4 @@
-from main impor db
+from main import db
 
 class NotaMateria(db.Model):
     __tablename__ = 'notamateria'
