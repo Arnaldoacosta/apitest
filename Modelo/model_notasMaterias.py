@@ -1,4 +1,6 @@
-from main import db
+from flask_sqlalchemy import SQLAlchemy
+
+db=SQLAlchemy()
 
 class NotaMateria(db.Model):
     __tablename__ = 'notamateria'

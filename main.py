@@ -4,16 +4,18 @@ from flask_sqlalchemy import SQLAlchemy
 from Servicio import servicio
 from config import Production
 import requests
+from Modelo.model_notasMaterias import db
+
+
 
 def create_app():
     app = Flask(__name__) 
     app.config.from_object(Production)
     return app
 
-
 app = create_app()
+db.init_app(app)
 
-db= SQLAlchemy(app)
 
 @app.route('/test', methods=['GET'])
 def get_users():
