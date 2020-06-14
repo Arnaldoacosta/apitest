@@ -35,12 +35,12 @@ def addNotaMateria():
 # Delete subject by notameriaID
 @app.route('/materia/<int:id>', methods=['DELETE'])
 def deleteNotaMateria(id):
-        return (serv.deleteNotaMateria(id))
+        return (servicio.deleteNotaMateria(id))
 
 # Update subject               
 @app.route('/materia', methods=['PATCH'])
 def updateNotaMateria():
-    return (serv.updateNotaMateria(request))
+    return (servicio.updateNotaMateria(request))
 
 
 
