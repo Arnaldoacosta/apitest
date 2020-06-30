@@ -12,7 +12,7 @@ from Servicio.Internal_errors import CodeInternalError
 def addNotaMateria(request): 
     notamateria=setNotaMateria(request)
     notamateria_comp=NotaMateria.buscarNotaMateriaByNotamateriaID(notamateria.notamateria_id)
-    if (int(notamateria.alumnoID)==int(notamateria_comp.alumno_fk) and (notamateria.nombremateria==notamateria_comp.nombremateria)):
+    if (int(notamateria.alumno_fk)==int(notamateria_comp.alumno_fk) and (notamateria.nombremateria==notamateria_comp.nombremateria)):
         raise InternalServerError('Ya existe la materia', CodeInternalError.ERROR_INTERNAL_11_CONEXION_BD)       
     else:       
         try:
