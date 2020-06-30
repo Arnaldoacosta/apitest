@@ -34,6 +34,10 @@ class NotaMateria(db.Model):
         return NotaMateria.query.filter_by(notamateria_id=notamateria_id).first()
 
     @staticmethod
+    def buscarNotaMateriaByNombreMateria(nombremateria,alumno_id):
+        return NotaMateria.query.filter_by(nombremateria=nombremateria,alumno_fk=alumno_id).first()
+
+    @staticmethod
     def getNotasMateriasByAlumnoID(id):
         return NotaMateria.query.filter_by(alumno_fk=id).order_by(NotaMateria.nombremateria).all()
         '''query = NotaMateria.query.filter(User.name.like('%ed')).order_by(User.id)'''

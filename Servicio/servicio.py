@@ -11,9 +11,11 @@ from Servicio.Internal_errors import CodeInternalError
 #add notaMateria
 def addNotaMateria(request): 
     notamateria=setNotaMateria(request)
-    notamateria_comp=NotaMateria.buscarNotaMateriaByNotamateriaID(notamateria.notamateria_id)
-    if (int(notamateria.alumno_fk)==int(notamateria_comp.alumno_fk) and (str(notamateria.nombremateria)==str(notamateria_comp.nombremateria)):
-        raise InternalServerError('Ya existe la materia', CodeInternalError.ERROR_INTERNAL_11_CONEXION_BD)       
+    alumnoID=request.json['alumno_id']
+    notamateriaID=request.json['nombremateria']
+    notamateria_comp=NotaMateria.buscarNotaMateriaByNombreMateria(notamateriaID,alumnoID)
+    if notamateria is not None:
+        raise BadResquest('Ya existe la materia', CodeInternalError.ERROR_INTERNAL_11_CONEXION_BD)       
     else:       
         try:
             notamateria.save()
