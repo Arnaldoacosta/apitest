@@ -10,21 +10,21 @@ from Servicio.Internal_errors import CodeInternalError
 
 #add notaMateria
 def addNotaMateria(request): 
-    notamateria=setNotaMateria(request)
-    alumnoID=request.json['alumno_id']
-    notamateriaID=request.json['nombremateria']
-    notamateria_comp=NotaMateria.buscarNotaMateriaByNombreMateria(notamateriaID,alumnoID)
-    if notamateria is not None:
-        raise BadResquest('Ya existe la materia', CodeInternalError.ERROR_INTERNAL_11_CONEXION_BD)       
-    else:       
-        try:
-            notamateria.save()
-            content = {'detalle': 'Recurso creado.'}
-            return content, status.HTTP_201_CREATED 
-        except Exception as identifier:
-            raise InternalServerError('Error relacionado con base de datos.', CodeInternalError.ERROR_INTERNAL_11_CONEXION_BD)       
+    #notamateria=setNotaMateria(request)
+    #alumnoID=request.json['alumno_id']
+    #notamateriaID=request.json['nombremateria']
+    #notamateria_comp=NotaMateria.buscarNotaMateriaByNombreMateria(notamateriaID,alumnoID)
+    #if notamateria_comp.nombremateria is not none
+    #    if notamateria_comp.nombremateria==notamateriaID:
+    #        raise BadResquest('Ya existe la materia', CodeInternalError.ERROR_INTERNAL_11_CONEXION_BD)       
+    #    else:
+    try:
+        notamateria.save()
+        content = {'detalle': 'Recurso creado.'}
+        return content, status.HTTP_201_CREATED 
+    except Exception as identifier:
+        raise InternalServerError('Error relacionado con base de datos.', CodeInternalError.ERROR_INTERNAL_11_CONEXION_BD)              
     
-
 #get
 def findNotasMateriasByAlumnoID(id):
     print('antes del try')
