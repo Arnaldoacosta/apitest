@@ -11,12 +11,16 @@ from Servicio.Internal_errors import CodeInternalError
 #add notaMateria
 def addNotaMateria(request): 
     notamateria=setNotaMateria(request)
-    try:
-        notamateria.save()
-        content = {'detalle': 'Recurso creado.'}
-        return content, status.HTTP_201_CREATED 
-    except Exception as identifier:
-        raise InternalServerError('Error relacionado con base de datos.', CodeInternalError.ERROR_INTERNAL_11_CONEXION_BD)       
+    notamateria_comp=NotaMateria.buscarNotaMateriaByNotamateriaID(notamateria.notamateria_id)
+    if (int(notamateria.alumnoID)==int(notamateria_comp.alumno_fk) and (notamateria.nombremateria==notamateria_comp.nombremateria)):
+        raise InternalServerError('Ya existe la materia', CodeInternalError.ERROR_INTERNAL_11_CONEXION_BD)       
+    else:       
+        try:
+            notamateria.save()
+            content = {'detalle': 'Recurso creado.'}
+            return content, status.HTTP_201_CREATED 
+        except Exception as identifier:
+            raise InternalServerError('Error relacionado con base de datos.', CodeInternalError.ERROR_INTERNAL_11_CONEXION_BD)       
     
 
 #get

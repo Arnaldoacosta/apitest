@@ -18,10 +18,10 @@ app = create_app()
 db.init_app(app)
 
 
-@app.route('/test', methods=['GET'])
+'''@app.route('/test', methods=['GET'])
 def get_users():
-    response = {'message': 'Hola Elu :), como estas?. Odio phyton :( ...'}
-    return jsonify(response)
+    response = {'message': 'Api irso'}
+    return jsonify(response)'''
 
 #GET subject for AlumnoID
 @app.route('/materias/<int:id>', methods=['GET'])

@@ -46,7 +46,7 @@ class NotaMateria(db.Model):
     def serializar(self):
         return {
             'notamateria_id': self.notamateria_id,
-            'alumno': self.alumno_fk,
+            'alumno_id': self.alumno_fk,
             'nombremateria':self.nombremateria,
             'notafinal':self.notafinal                   
         }
