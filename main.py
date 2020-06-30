@@ -47,7 +47,7 @@ def updateNotaMateria():
 #Get all ---(Se usará en una posible futuro si crece la aplicacion)
 @app.route('/materias', methods=['GET'])
 def getNotasMaterias():  
-    return (serv.getNotasMaterias())
+    return (servicio.getNotasMaterias())
 
 @app.errorhandler(ApiExceptionServ)
 def handle_invalid_usage(error):
