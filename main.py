@@ -44,6 +44,11 @@ def updateNotaMateria():
     return (servicio.updateNotaMateria(request))
 
 
+#Get all ---(Se usará en una posible futuro si crece la aplicacion)
+@app.route('/materias', methods=['GET'])
+def getNotasMaterias():  
+    return (serv.getNotasMaterias())
+
 @app.errorhandler(ApiExceptionServ)
 def handle_invalid_usage(error):
     response = jsonify(error.to_dict())

@@ -21,10 +21,12 @@ def addNotaMateria(request):
 
 #get
 def findNotasMateriasByAlumnoID(id):
+    print('antes del try')
     try:
         obj=NotaMateria.getNotasMateriasByAlumnoID(id)
+        print('hola')
     except Exception as identifier:
-        raise InternalServerError('Error relacionado con base de datos.', CodeInternalError.ERROR_INTERNAL_11_CONEXION_BD)          
+        raise InternalServerError(identifier, CodeInternalError.ERROR_INTERNAL_11_CONEXION_BD)          
     if obj is not None and len(obj)!=0:
         json_Str=jsonify([e.serializar() for e in obj]) 
         return json_Str
