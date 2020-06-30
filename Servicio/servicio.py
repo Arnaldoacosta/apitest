@@ -36,14 +36,14 @@ def findNotasMateriasByAlumnoID(id):
 
 # Get all NotasMaterias
 def getNotasMaterias():
-    #materias=NotaMateria.buscarNotasMaterias()
-    #json_Str=jsonify([e.serializar() for e in materias]) 
-    #return json_Str
-    page=NotaMateria.buscarNotasMaterias()
-    final_list = []
-    for element in page:
-        final_list.append(element)
-    return jsonify(final_list), status_code
+    materias=NotaMateria.buscarNotasMaterias()
+    json_Str=jsonify([e.serializar() for e in materias]) 
+    return json_Str
+    #page=NotaMateria.buscarNotasMaterias()
+    #final_list = []
+    #for element in page:
+    #    final_list.append(element)
+    #return jsonify(final_list), status_code
 
     
 
