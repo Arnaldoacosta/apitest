@@ -15,7 +15,7 @@ class NotaMateria(db.Model):
     def __init__(self,alumno,nombremateria,notafinal):
         self.alumno_fk=alumno,
         self.nombremateria=nombremateria,
-        self.notafinal=notafinal         
+        self.notafinal=notafinal       
 
     def save(self):
         db.session.add(self)
@@ -25,17 +25,21 @@ class NotaMateria(db.Model):
         return '<id {}>'.format(self.notamateria_id)
 
     @staticmethod
-    def buscarNotasMaterias():
+    def getNotasMaterias():
             #NotaMateria.query(func.count(User.id))
         return NotaMateria.query.order_by(NotaMateria.alumno_fk).all() 
 
     @staticmethod
-    def buscarNotaMateriaByNotamateriaID(notamateria_id):
+    def getNotaMateriaByNotamateriaID(notamateria_id):
         return NotaMateria.query.filter_by(notamateria_id=notamateria_id).first()
 
     @staticmethod
-    def buscarNotaMateriaByNombreMateria(nombremateria,alumno_id):
-        return NotaMateria.query.filter_by(nombremateria=nombremateria,alumno_fk=alumno_id).first()
+    def getNotaMateriaToAlumnoIDByNotamateriaID(notamateria_id,alumnoid):
+        return NotaMateria.query.filter_by(notamateria_id=notamateria_id, alumno_fk=alumnoid).first()
+
+    @staticmethod
+    def getNotaMateriaByNombreMateria(alumnoid,nombremateria):
+        return NotaMateria.query.filter_by(nombremateria=nombremateria,alumno_fk=alumnoid).first()
 
     @staticmethod
     def getNotasMateriasByAlumnoID(id):

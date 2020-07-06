@@ -23,20 +23,28 @@ def get_users():
     response = {'message': 'Api irso'}
     return jsonify(response)'''
 
-#GET subject for AlumnoID
-@app.route('/materias/<int:id>', methods=['GET'])
-def findNotasMateriasByAlumnoID(id):      
-        return (servicio.findNotasMateriasByAlumnoID(str(id)))
-
 #  Add subject
-@app.route('/materia', methods=['POST'])
-def addNotaMateria():  
+@app.route('/alumnos/materias', methods=['POST'])
+def addNotaMateria(): 
     return (servicio.addNotaMateria(request))
+#region get
+
+#GET subject for AlumnoID y materia ID
+@app.route('/alumnos/<int:alumnoid>/materias/<int:materiaid>', methods=['GET'])
+def getNotasMateriasByAlumnoIDToMateriaID(alumnoid,materiaid):      
+    return (servicio.getNotasMateriasToAlumnoIDbyNotaMateriaID(alumnoid,materiaid))
+
+#Get all notamaterias para un alumnoID
+@app.route('/alumnos/<int:alumnoid>/materias', methods=['GET'])
+def getNotasMateriasByAlumnoID(alumnoid):   
+    return (servicio.getNotasMateriasByAlumnoID(alumnoid))
+
+#endregion 
 
 # Delete subject by notameriaID
-@app.route('/materia/<int:id>', methods=['DELETE'])
-def deleteNotaMateria(id):
-        return (servicio.deleteNotaMateria(id))
+@app.route('/alumnos/<int:alumnoid>/materias/<int:notamateriaid>', methods=['DELETE'])
+def deleteNotaMateria(alumnoid,notamateriaid):
+    return (servicio.deleteNotaMateria(alumnoid,notamateriaid))
 
 # Update subject               
 @app.route('/materia', methods=['PATCH'])

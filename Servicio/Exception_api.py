@@ -40,6 +40,11 @@ class InternalServerError(ApiExceptionServ):
     status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
 
 class BadResquest(ApiExceptionServ):
-    message='Recurso no encontrado.'
+    message='Solicitud incorrecta.'
     status_code=status.HTTP_400_BAD_REQUEST
+
+
+class Conflict(ApiExceptionServ):
+    message='Recurso en conflicto.'
+    status_code=status.HTTP_409_CONFLICT
 
