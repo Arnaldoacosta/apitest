@@ -33,21 +33,24 @@ def getNotasMateriasByAlumnoID(alumnoid):
         json_Str=jsonify([e.serializar() for e in obj]) 
         return json_Str
     else:
-        raise BadResquest('Recurso no encontrado en la base de datos.',CodeInternalError.ERROR_INTERNAL_12_REQUEST_NOT_FOUND)
+        raise BadResquest('Recurso no encontrado.',CodeInternalError.ERROR_INTERNAL_12_REQUEST_NOT_FOUND)
 #endregion
 
 #region get one notamanteriaID to an AlumnoID
-def getNotasMateriasToAlumnoIDbyNotaMateriaID(id):
+def getNotasMateriasToAlumnoIDbyNotaMateriaID(alumnoid,materiaid):
+    if (not(isNumber(alumnoid))):
+        raise BadResquest(identifier, CodeInternalError.ERROR_INTERNAL_13_REQUEST_DATA_NOT_MATCHED)
+    elif (not(isNumber(materiaid))):
+        raise BadResquest(identifier, CodeInternalError.ERROR_INTERNAL_13_REQUEST_DATA_NOT_MATCHED)
     try:
-        obj=NotaMateria.getNotasMateriasByAlumnoID(id)
-        print('hola')
+        obj=NotaMateria.getNotaMateriaToAlumnoIDByNotamateriaID(materiaid,alumnoid)
     except Exception as identifier:
         raise InternalServerError(identifier, CodeInternalError.ERROR_INTERNAL_11_CONEXION_BD)          
     if obj is not None and len(obj)!=0:
         json_Str=jsonify([e.serializar() for e in obj]) 
         return json_Str
     else:
-        raise BadResquest('Recurso no encontrado en la base de datos.',CodeInternalError.ERROR_INTERNAL_12_REQUEST_NOT_FOUND)
+        raise BadResquest('Recurso no encontrado.',CodeInternalError.ERROR_INTERNAL_12_REQUEST_NOT_FOUND)
 #endregion
 
 
@@ -124,7 +127,7 @@ def deleteNotaMateria(alumnoid,notamateriaid):
         except Exception as identifier:
             raise InternalServerError('Error relacionado con base de datos.', CodeInternalError.ERROR_INTERNAL_11_CONEXION_BD)   
     else:
-        raise BadResquest('Recurso no encontrado en la base de datos.',CodeInternalError.ERROR_INTERNAL_12_REQUEST_NOT_FOUND)  
+        raise BadResquest('Recurso no encontrado.',CodeInternalError.ERROR_INTERNAL_12_REQUEST_NOT_FOUND)  
 #endregion     
 
 #region Common Methods

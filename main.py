@@ -31,7 +31,7 @@ def addNotaMateria():
 
 #GET subject for AlumnoID y materia ID
 @app.route('/alumnos/<int:alumnoid>/materias/<int:materiaid>', methods=['GET'])
-def getNotasMateriasByAlumnoIDToMateriaID(alumnoid,materiaid):      
+def getNotasMateriasByAlumnoIDToMateriaID(alumnoid,materiaid):    
     return (servicio.getNotasMateriasToAlumnoIDbyNotaMateriaID(alumnoid,materiaid))
 
 #Get all notamaterias para un alumnoID
@@ -47,8 +47,8 @@ def deleteNotaMateria(alumnoid,notamateriaid):
     return (servicio.deleteNotaMateria(alumnoid,notamateriaid))
 
 # Update subject               
-@app.route('/materia', methods=['PATCH'])
-def updateNotaMateria():
+@app.route('/alumnos/<int:alumnoid>/materias/<int:notamateriaid>', methods=['PUT'])
+def updateNotaMateria(alumnoid,notamateriaid):
     return (servicio.updateNotaMateria(request))
 
 

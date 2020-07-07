@@ -35,7 +35,7 @@ class NotaMateria(db.Model):
 
     @staticmethod
     def getNotaMateriaToAlumnoIDByNotamateriaID(notamateria_id,alumnoid):
-        return NotaMateria.query.filter_by(notamateria_id=notamateria_id, alumno_fk=alumnoid).first()
+        return NotaMateria.query.filter_by(notamateria_id=notamateria_id, alumno_fk=alumnoid).all()
 
     @staticmethod
     def getNotaMateriaByNombreMateria(alumnoid,nombremateria):
