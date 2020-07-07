@@ -44,9 +44,9 @@ def getNotasMateriasToAlumnoIDbyNotaMateriaID(alumnoid,materiaid):
     elif (not(isNumber(materiaid))):
         raise BadResquest(identifier, CodeInternalError.ERROR_INTERNAL_13_REQUEST_DATA_NOT_MATCHED)
     try:
-        obj=NotaMateria.getNotaMateriaToAlumnoIDByNotamateriaID(materiaid,alumnoid)
+        obj=NotaMateria.getNotaMateriaNotamateriaIDToAlumnoID(materiaid,alumnoid)
     except Exception as identifier:
-        raise InternalServerError(identifier, CodeInternalError.ERROR_INTERNAL_11_CONEXION_BD)          
+        raise InternalServerError('Error relacionado en base de datos', CodeInternalError.ERROR_INTERNAL_11_CONEXION_BD)          
     if obj is not None and len(obj)!=0:
         json_Str=jsonify([e.serializar() for e in obj]) 
         return json_Str
@@ -147,14 +147,16 @@ def setNotaMateria(request,action):
             ADD_NEW
         )
     else:
-        notamateria=NotaMateria(
-            request.json['alumno_id'],
-            request.json['nombremateria'],
-            request.json['notafinal'],
-            request.json['notamateria_id'],
-            UPDATE
-        )
-        print('explota')
+        try:  
+            notamateria=NotaMateria(
+                request.json['alumno_id'],
+                request.json['nombremateria'],
+                request.json['notafinal'],
+                request.json['notamateria_id'],
+                UPDATE
+            )
+        except Exception as identifier:
+            raise BadResquest('Estructura de archivo invalida',CodeInternalError.ERROR_INTERNAL_10_JSON_BAD_FORMED)
     return notamateria
 
 def isValidDataType(request):
@@ -175,7 +177,7 @@ def isNumber(json_value):
         return False
 
 def existsNotaMateriaIDToAlumnoID(alumnoid, notamateriaid,nombremateria):
-    notamateria_comp=NotaMateria.getNotaMateriaToAlumnoIDByNotamateriaID(notamateriaid,alumnoid,nombremateria)
+    notamateria_comp=NotaMateria.getNotaMateriaToAlumnoIDByNotamateriaIDNombreMateria(notamateriaid,alumnoid,nombremateria)
     dir(notamateria_comp)
     if notamateria_comp is None:
         return False

@@ -36,12 +36,12 @@ class NotaMateria(db.Model):
         return NotaMateria.query.filter_by(notamateria_id=notamateria_id).first()
 
     @staticmethod
-    def getNotaMateriaToAlumnoIDByNotamateriaID(notamateria_id,alumnoid):
+    def getNotaMateriaNotamateriaIDToAlumnoID(notamateria_id,alumnoid):
         return NotaMateria.query.filter_by(notamateria_id=notamateria_id, alumno_fk=alumnoid).all()
 
     @staticmethod
-    def getNotaMateriaToAlumnoIDByNotamateriaID(notamateria_id,alumnoid,nombremateria):
-        return NotaMateria.query.filter_by(notamateria_id=notamateria_id, alumno_fk=alumnoid,nombremateria=nombremateria).all()
+    def getNotaMateriaToAlumnoIDByNotamateriaIDNombreMateria(notamateria_id,alumnoid,nombremateria):
+        return NotaMateria.query.filter_by(notamateria_id=notamateria_id, alumno_fk=alumnoid,nombremateria=nombremateria).first()
 
     @staticmethod
     def getNotaMateriaByNombreMateria(alumnoid,nombremateria):
