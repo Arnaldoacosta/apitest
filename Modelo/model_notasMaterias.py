@@ -12,10 +12,12 @@ class NotaMateria(db.Model):
     nombremateria = db.Column(db.String(2))
     notafinal = db.Column(db.Integer)
 
-    def __init__(self,alumno,nombremateria,notafinal):
+    def __init__(self,alumno,nombremateria,notafinal,notamateriaid,isNew):
         self.alumno_fk=alumno,
         self.nombremateria=nombremateria,
-        self.notafinal=notafinal       
+        self.notafinal=notafinal,
+        if (not(isNew)):
+            self.notamateria_id=notamateriaid       
 
     def save(self):
         db.session.add(self)
@@ -36,6 +38,10 @@ class NotaMateria(db.Model):
     @staticmethod
     def getNotaMateriaToAlumnoIDByNotamateriaID(notamateria_id,alumnoid):
         return NotaMateria.query.filter_by(notamateria_id=notamateria_id, alumno_fk=alumnoid).all()
+
+    @staticmethod
+    def getNotaMateriaToAlumnoIDByNotamateriaID(notamateria_id,alumnoid,nombremateria):
+        return NotaMateria.query.filter_by(notamateria_id=notamateria_id, alumno_fk=alumnoid,nombremateria=nombremateria).all()
 
     @staticmethod
     def getNotaMateriaByNombreMateria(alumnoid,nombremateria):

@@ -6,10 +6,11 @@ from flask_api import FlaskAPI, status
 from Servicio.Exception_api import *
 import requests
 from Servicio.Internal_errors import CodeInternalError
+from Servicio.global_variable import ADD_NEW,UPDATE
 
 #region add materia
 def addNotaMateria(request): 
-    notamateria=setNotaMateria(request)
+    notamateria=setNotaMateria(request,ADD_NEW)
     if (existsNombreMateriaToAlumnoID(notamateria.alumno_fk,notamateria.nombremateria)):
         raise Conflict('Existe una nota para esta materia', CodeInternalError.ERROR_INTERNAL_14_REQUEST_DATA_DUPLICATED)
     else:
@@ -109,20 +110,19 @@ def updateNotaMateriasByAlumnoID(id):
 #endregion 
 
 #region delete notamaterias
-def deleteNotaMateria(alumnoid,notamateriaid):
-    if not(isNumber(alumnoid)):
-        raise BadResquest('AlumnoID es un tipo invalido', CodeInternalError.ERROR_INTERNAL_13_REQUEST_DATA_NOT_MATCHED)
-    elif not(isNumber(notamateriaid)):
+def deleteNotaMateria(request):    
+    notamateria_json=setNotaMateria(request,UPDATE)
+    if (not(isNumber(notamateria_json.notamateria_id))):
         BadResquest('NotamateriaID es un tipo invalido', CodeInternalError.ERROR_INTERNAL_13_REQUEST_DATA_NOT_MATCHED)
-    if (not(existsNotaMateriaIDToAlumnoID(alumnoid,notamateriaid))):
+    if (not(existsNotaMateriaIDToAlumnoID(notamateria_json.alumno_fk,notamateria_json.notamateria_id,notamateria_json.nombremateria))):
         raise BadResquest('No existe la materia para el alumno asociado', CodeInternalError.ERROR_INTERNAL_11_CONEXION_BD)
     try:
-        notamateria=NotaMateria.getNotaMateriaByNotamateriaID(notamateriaid)
+        notamateria_delete=NotaMateria.getNotaMateriaByNotamateriaID(notamateria_json.notamateria_id)
     except Exception as identifier:
         raise InternalServerError('Error relacionado con base de datos.', CodeInternalError.ERROR_INTERNAL_11_CONEXION_BD)          
-    if notamateria is not None:
+    if notamateria_delete is not None:
         try:
-            notamateria.delete()
+            notamateria_delete.delete()
             return ('',status.HTTP_204_NO_CONTENT)
         except Exception as identifier:
             raise InternalServerError('Error relacionado con base de datos.', CodeInternalError.ERROR_INTERNAL_11_CONEXION_BD)   
@@ -131,18 +131,30 @@ def deleteNotaMateria(alumnoid,notamateriaid):
 #endregion     
 
 #region Common Methods
-def setNotaMateria(request):
+def setNotaMateria(request,action):
     try:  
         request.get_json()
     except Exception as identifier:
         raise BadResquest('Estructura de archivo invalida',CodeInternalError.ERROR_INTERNAL_10_JSON_BAD_FORMED)
     isValidDataType(request)
     isValidNotaFinal(request.json['notafinal']) 
-    notamateria=NotaMateria(
-        request.json['alumno_id'],
-        request.json['nombremateria'],
-        request.json['notafinal']
+    if (action):
+        notamateria=NotaMateria(
+            request.json['alumno_id'],
+            request.json['nombremateria'],
+            request.json['notafinal'],
+            0,
+            ADD_NEW
         )
+    else:
+        notamateria=NotaMateria(
+            request.json['alumno_id'],
+            request.json['nombremateria'],
+            request.json['notafinal'],
+            request.json['notamateria_id'],
+            UPDATE
+        )
+        print('explota')
     return notamateria
 
 def isValidDataType(request):
@@ -162,8 +174,8 @@ def isNumber(json_value):
     except:
         return False
 
-def existsNotaMateriaIDToAlumnoID(alumnoid, notamateriaid):
-    notamateria_comp=NotaMateria.getNotaMateriaByNombreMateria(notamateriaid,alumnoid)
+def existsNotaMateriaIDToAlumnoID(alumnoid, notamateriaid,nombremateria):
+    notamateria_comp=NotaMateria.getNotaMateriaToAlumnoIDByNotamateriaID(notamateriaid,alumnoid,nombremateria)
     dir(notamateria_comp)
     if notamateria_comp is None:
         return False

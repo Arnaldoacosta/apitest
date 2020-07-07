@@ -42,15 +42,15 @@ def getNotasMateriasByAlumnoID(alumnoid):
 #endregion 
 
 # Delete subject by notameriaID
-@app.route('/alumnos/<int:alumnoid>/materias/<int:notamateriaid>', methods=['DELETE'])
-def deleteNotaMateria(alumnoid,notamateriaid):
-    return (servicio.deleteNotaMateria(alumnoid,notamateriaid))
+@app.route('/alumnos/materias', methods=['DELETE'])
+def deleteNotaMateria():
+    return (servicio.deleteNotaMateria(request))
+
 
 # Update subject               
 @app.route('/alumnos/<int:alumnoid>/materias/<int:notamateriaid>', methods=['PUT'])
 def updateNotaMateria(alumnoid,notamateriaid):
     return (servicio.updateNotaMateria(request))
-
 
 #Get all ---(Se usará en una posible futuro si crece la aplicacion)
 @app.route('/materias', methods=['GET'])
