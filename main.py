@@ -24,38 +24,37 @@ def get_users():
     return jsonify(response)'''
 
 #  Add subject
-@app.route('/alumnos/materias', methods=['POST'])
-def addNotaMateria(): 
-    return (servicio.addNotaMateria(request))
+@app.route('/alumnos/<int:alumnoid>/notas', methods=['POST'])
+def addNotaMateria(alumnoid): 
+    return (servicio.addNotaMateria(request,alumnoid))
 #region get
 
 #GET subject for AlumnoID y materia ID
-@app.route('/alumnos/<int:alumnoid>/materias/<int:materiaid>', methods=['GET'])
+@app.route('/alumnos/<int:alumnoid>/notas/<int:materiaid>', methods=['GET'])
 def getNotasMateriasByAlumnoIDToMateriaID(alumnoid,materiaid):    
     return (servicio.getNotasMateriasToAlumnoIDbyNotaMateriaID(alumnoid,materiaid))
 
 #Get all notamaterias para un alumnoID
-@app.route('/alumnos/<int:alumnoid>/materias', methods=['GET'])
+@app.route('/alumnos/<int:alumnoid>/notas', methods=['GET'])
 def getNotasMateriasByAlumnoID(alumnoid):   
     return (servicio.getNotasMateriasByAlumnoID(alumnoid))
 
 #endregion 
 
 # Delete subject by notameriaID
-@app.route('/alumnos/materias', methods=['DELETE'])
-def deleteNotaMateria():
-    return (servicio.deleteNotaMateria(request))
-
+@app.route('/alumnos/<int:alumnoid>/notas/<int:notamateriaid>', methods=['DELETE'])
+def deleteNotaMateria(alumnoid,notamateriaid):
+    return (servicio.deleteNotaMateria(alumnoid,notamateriaid))
 
 # Update subject               
-@app.route('/alumnos/<int:alumnoid>/materias/<int:notamateriaid>', methods=['PUT'])
+@app.route('/alumnos/<int:alumnoid>/notas/<int:notamateriaid>', methods=['PUT'])
 def updateNotaMateria(alumnoid,notamateriaid):
-    return (servicio.updateNotaMateria(request))
+    return (servicio.updateNotaMateria(request,alumnoid,notamateriaid))
 
 #Get all ---(Se usará en una posible futuro si crece la aplicacion)
-@app.route('/materias', methods=['GET'])
+'''@app.route('/materias', methods=['GET'])
 def getNotasMaterias():  
-    return (servicio.getNotasMaterias())
+    return (servicio.getNotasMaterias())'''
 
 @app.errorhandler(ApiExceptionServ)
 def handle_invalid_usage(error):

@@ -13,7 +13,7 @@ class NotaMateria(db.Model):
     notafinal = db.Column(db.Integer)
 
     def __init__(self,alumno,nombremateria,notafinal,notamateriaid,isNew):
-        self.alumno_fk=alumno,
+        self.alumno_fk=alumno,  
         self.nombremateria=nombremateria,
         self.notafinal=notafinal,
         if (not(isNew)):
@@ -24,7 +24,7 @@ class NotaMateria(db.Model):
         db.session.commit()      
 
     def __repr__(self):
-        return '<id {}>'.format(self.notamateria_id)
+        return '{}'.format(self.notamateria_id)
 
     @staticmethod
     def getNotasMaterias():
@@ -37,7 +37,7 @@ class NotaMateria(db.Model):
 
     @staticmethod
     def getNotaMateriaNotamateriaIDToAlumnoID(notamateria_id,alumnoid):
-        return NotaMateria.query.filter_by(notamateria_id=notamateria_id, alumno_fk=alumnoid).all()
+        return NotaMateria.query.filter_by(notamateria_id=notamateria_id, alumno_fk=alumnoid).first()
 
     @staticmethod
     def getNotaMateriaToAlumnoIDByNotamateriaIDNombreMateria(notamateria_id,alumnoid,nombremateria):
