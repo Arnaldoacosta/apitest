@@ -24,10 +24,13 @@ def get_users():
     return jsonify(response)'''
 
 @app.route('/test/<int:id1>/<int:id2>', methods=['GET'])
-def get_users(id1,id2):
+def get_users1(id1,id2):
     retorno= servicio.testDeTrue(id1,id2)
     print(retorno)
-    return str(retorno)
+    if (retorno==True):
+        return ('verdadero')
+    else:
+        return ('falso')
      
 
 
