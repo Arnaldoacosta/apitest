@@ -216,5 +216,7 @@ def isValidNotaFinal(notafinal):
 #endregion 
 
 
-
+def testDeTrue(id1,id2):
+    boleano=NotaMateria.testDeTrue(id1,id2)
+    return boleano
 

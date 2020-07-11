@@ -1,5 +1,4 @@
 from flask_sqlalchemy import SQLAlchemy
-
 db=SQLAlchemy()
 
 class NotaMateria(db.Model):
@@ -53,6 +52,14 @@ class NotaMateria(db.Model):
         '''query = NotaMateria.query.filter(User.name.like('%ed')).order_by(User.id)'''
         '''return NotaMateria.query.filter_by(alumno_fk=id).first_or_404(description='No existe datos con el ID ={}'.format(id))'''
     #session.query(User).filter_by(name='jack').count() hacer esto para verificar si fue eliminado
+
+    @staticmethod
+    def testDeTrue(id1,id2):
+         variable=18
+         exists = bool(NotaMateria.query.filter_by(alumno_fk=id1, notamateria_id=id2).first())
+         return exists
+
+
     def delete(self):
         db.session.delete(self)
         db.session.commit() 

@@ -23,6 +23,14 @@ def get_users():
     response = {'message': 'Api irso'}
     return jsonify(response)'''
 
+@app.route('/test/<int:id1>/<int:id2>', methods=['GET'])
+def get_users(id1,id2):
+    retorno= servicio.testDeTrue(id1,id2)
+    print(retorno)
+    return str(retorno)
+     
+
+
 #  Add subject
 @app.route('/alumnos/<int:alumnoid>/notas', methods=['POST'])
 def addNotaMateria(alumnoid): 
