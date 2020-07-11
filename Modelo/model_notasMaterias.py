@@ -54,9 +54,13 @@ class NotaMateria(db.Model):
     #session.query(User).filter_by(name='jack').count() hacer esto para verificar si fue eliminado
 
     @staticmethod
-    def testDeTrue(id1,id2):
-         variable=18
-         exists = bool(NotaMateria.query.filter_by(alumno_fk=id1, notamateria_id=id2).first())
+    def existsNombreMateriaToAlumnoID(alumnoid,nombremateria):
+         exists = bool(NotaMateria.query.filter_by(alumno_fk=alumnoid, nombremateria=nombremateria).first())
+         return exists
+
+    @staticmethod
+    def existsMateriaIDToAlumnoID(alumnoid,notamateriaid):
+         exists = bool(NotaMateria.query.filter_by(alumno_fk=alumnoid, notamateria_id=notamateriaid).first())
          return exists
 
 
