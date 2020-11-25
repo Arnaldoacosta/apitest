@@ -8,6 +8,46 @@ import requests
 from Servicio.Internal_errors import CodeInternalError
 from Servicio.global_variable import ADD_NEW,UPDATE
 
+
+def getNotamateriaToAlumnoIDbyNombreMateria(idalumno,argumentos):
+    isvalidArgs(argumentos)
+    nombremateria=argumentos.get("nombremateria")
+    if (nombremateria):
+        nombremateria_string = nombremateria.replace('"', '');
+        print(nombremateria_string)
+        retorno=isNumber(nombremateria_string)
+        if (not(isNumber(nombremateria_string))):         
+            notamateria=NotaMateria.getNotamateriaToAlumnoIDbyNombreMateria(idalumno,nombremateria)
+            resultadojson=[]
+            for itm in notamateria:
+                print(itm)
+                #print('mostrar nota ITM', itm.notamateria_id)
+                #notatemporal=NotaMateria(itm.alumno_fk,itm.nombremateria,itm.notafinal,itm.notamateria_id,False)
+                notatemporal=NotaMateria.serializarManual(itm.notamateria_id,itm.alumno_fk,itm.nombremateria,itm.notafinal)
+                print('aca')
+                #NotaMateria.serializar(notatemporal) 
+                #print('nota temporl:')
+                print(notatemporal)
+                resultadojson.append(notatemporal)
+            #print('que es:')    
+            print(resultadojson)
+            #for itm in notamateria:
+            #    resultadojson.append(itm)
+            #print("*****despues***")
+            #print(type(resultadojson))
+            #print(resultadojson)
+            #notamateria=jsonify([e.serializar() for e in resultadojson]) 
+            #notamateria=jsonify([e.serializar() for e in notamateria]) 
+            #return jsonify({'result': resultadojson})
+            #return jsonify({'result': [dict(row) for row in notamateria]})
+            return jsonify(resultadojson) 
+        else:
+            raise BadResquest('Nombremateria no puede ser un número.', CodeInternalError.ERROR_INTERNAL_13_REQUEST_DATA_NOT_MATCHED)
+    else:
+        raise BadResquest('No se encontró el parametro Nombremateria.', CodeInternalError.ERROR_INTERNAL_13_REQUEST_DATA_NOT_MATCHED)
+    #if (argumentos.get("nombremateria")):
+
+
 #region add materia
 def addNotaMateria(request,alumnoid):
     if (not(isNumber(alumnoid))):
@@ -30,7 +70,7 @@ def addNotaMateria(request,alumnoid):
             raise InternalServerError('Error relacionado con base de datos', CodeInternalError.ERROR_INTERNAL_11_CONEXION_BD)              
 #endregion 
 
-#region get all notas manteria by ALUMNO ID
+#region get all nota s manteria by ALUMNO ID
 def getNotasMateriasByAlumnoID(alumnoid):
     if not(isNumber(alumnoid)):
         raise BadResquest('AlumnoID es un tipo invalido', CodeInternalError.ERROR_INTERNAL_13_REQUEST_DATA_NOT_MATCHED)
@@ -181,6 +221,16 @@ def isNumber(attribute):
         return True
     except:
         return False
+
+'''Valida cantidad de argumentos'''
+def isvalidArgs(argumento): 
+    vec=[]
+    for it in argumento:
+        vec.append(it)
+    cantidad_Arg=(len(vec))
+    if cantidad_Arg>1:
+        raise NotFound('Cantidad de argumentos no soportado.',CodeInternalError.ERROR_INTERNAL_13_REQUEST_DATA_NOT_MATCHED)
+
 
 #region bussiness rules
 def isValidNotaFinal(notafinal):

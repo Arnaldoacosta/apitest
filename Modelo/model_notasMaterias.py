@@ -1,4 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import text
+from flask import jsonify
 db=SQLAlchemy()
 
 class NotaMateria(db.Model):
@@ -63,6 +65,14 @@ class NotaMateria(db.Model):
          exists = bool(NotaMateria.query.filter_by(alumno_fk=alumnoid, notamateria_id=notamateriaid).first())
          return exists
 
+    @staticmethod
+    def getNotamateriaToAlumnoIDbyNombreMateria(idalumno,nombremateria):
+        materia_buscar=str(nombremateria)
+        materia_buscar = materia_buscar.replace('"', '');
+        cmd = "Select * from notamateria where nombremateria like'" + "%" + materia_buscar+ "%'" + " and alumno_fk= :alumno"
+        result = db.engine.execute(text(cmd), nombre = materia_buscar, alumno=idalumno)  
+        #return jsonify({'result': [dict(row) for row in result]})
+        return result
 
     def delete(self):
         db.session.delete(self)
@@ -74,4 +84,12 @@ class NotaMateria(db.Model):
             'alumno_id': self.alumno_fk,
             'nombremateria':self.nombremateria,
             'notafinal':self.notafinal                   
+        }
+        
+    def serializarManual(notamateria_id,alumno_fk,nombremateria,notafinal):
+        return {
+            'notamateria_id': notamateria_id,
+            'alumno_id': alumno_fk,
+            'nombremateria':nombremateria,
+            'notafinal':notafinal                   
         }

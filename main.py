@@ -6,6 +6,8 @@ from config import Production
 import requests
 from Modelo.model_notasMaterias import db
 from Servicio.Exception_api import ApiExceptionServ
+from flask_api import FlaskAPI, status
+from flask_cors import CORS
 
 
 
@@ -17,12 +19,12 @@ def create_app():
 app = create_app()
 db.init_app(app)
 
+cors = CORS(app, resources={r"/alumnos/*": {"origins":"*"}})
 
-'''@app.route('/test', methods=['GET'])
-def get_users():
-    response = {'message': 'Api irso'}
-    return jsonify(response)'''
-
+@app.route('/alumnos/<int:id>/notas', methods=['GET'])
+def getNotaMateriaToAlumnoIDByNombremateria(id):
+    return servicio.getNotamateriaToAlumnoIDbyNombreMateria(id,request.args)
+    
 #  Add subject
 @app.route('/alumnos/<int:alumnoid>/notas', methods=['POST'])
 def addNotaMateria(alumnoid): 
@@ -35,9 +37,9 @@ def getNotasMateriasByAlumnoIDToMateriaID(alumnoid,materiaid):
     return (servicio.getNotasMateriasToAlumnoIDbyNotaMateriaID(alumnoid,materiaid))
 
 #Get all notamaterias para un alumnoID
-@app.route('/alumnos/<int:alumnoid>/notas', methods=['GET'])
+'''@app.route('/alumnos/<int:alumnoid>/notas', methods=['GET'])
 def getNotasMateriasByAlumnoID(alumnoid):   
-    return (servicio.getNotasMateriasByAlumnoID(alumnoid))
+    return (servicio.getNotasMateriasByAlumnoID(alumnoid))'''
 
 #endregion 
 
@@ -51,16 +53,15 @@ def deleteNotaMateria(alumnoid,notamateriaid):
 def updateNotaMateria(alumnoid,notamateriaid):
     return (servicio.updateNotaMateria(request,alumnoid,notamateriaid))
 
-#Get all ---(Se usará en una posible futuro si crece la aplicacion)
-'''@app.route('/materias', methods=['GET'])
-def getNotasMaterias():  
-    return (servicio.getNotasMaterias())'''
-
 @app.errorhandler(ApiExceptionServ)
 def handle_invalid_usage(error):
     response = jsonify(error.to_dict())
     response.status_code = error.status_code
     return response
+
+@app.errorhandler(404)
+def retorn(e):
+    return {"Detalle:" :"Recurso inexistente."},status.HTTP_404_NOT_FOUND
 
 
 if __name__ == '__main__':
