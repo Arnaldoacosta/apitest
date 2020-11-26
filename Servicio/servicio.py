@@ -18,29 +18,24 @@ def getNotamateriaToAlumnoIDbyNombreMateria(idalumno,argumentos):
         retorno=isNumber(nombremateria_string)
         if (not(isNumber(nombremateria_string))):         
             notamateria=NotaMateria.getNotamateriaToAlumnoIDbyNombreMateria(idalumno,nombremateria)
-            resultadojson=[]
-            for itm in notamateria:
-                print(itm)
-                #print('mostrar nota ITM', itm.notamateria_id)
-                #notatemporal=NotaMateria(itm.alumno_fk,itm.nombremateria,itm.notafinal,itm.notamateria_id,False)
-                notatemporal=NotaMateria.serializarManual(itm.notamateria_id,itm.alumno_fk,itm.nombremateria,itm.notafinal)
-                print('aca')
-                #NotaMateria.serializar(notatemporal) 
-                #print('nota temporl:')
-                print(notatemporal)
-                resultadojson.append(notatemporal)
-            #print('que es:')    
-            print(resultadojson)
-            #for itm in notamateria:
-            #    resultadojson.append(itm)
-            #print("*****despues***")
-            #print(type(resultadojson))
-            #print(resultadojson)
-            #notamateria=jsonify([e.serializar() for e in resultadojson]) 
-            #notamateria=jsonify([e.serializar() for e in notamateria]) 
-            #return jsonify({'result': resultadojson})
-            #return jsonify({'result': [dict(row) for row in notamateria]})
-            return jsonify(resultadojson) 
+            print(notamateria.rowcount)
+            cantidadRegistros=notamateria.rowcount
+            if (notamateria.rowcount==0):
+                raise NotFound('Recurso no encontrado.',CodeInternalError.ERROR_INTERNAL_12_REQUEST_NOT_FOUND)
+            elif (notamateria.rowcount==1):
+                    print('aca 1 resultado')
+                    for itm in notamateria:
+                        return jsonify(alumnoid=itm.alumno_fk,
+                        notamateriaid=itm.notamateria_id,
+                        nombremateria=itm.nombremateria,
+                        notafinal=itm.notafinal,
+                        ), status.HTTP_201_CREATED
+            else:
+                resultadojson=[]
+                for itm in notamateria:
+                    notatemporal=NotaMateria.serializarManual(itm.notamateria_id,itm.alumno_fk,itm.nombremateria,itm.notafinal)
+                    resultadojson.append(notatemporal)
+                return jsonify(resultadojson) 
         else:
             raise BadResquest('Nombremateria no puede ser un número.', CodeInternalError.ERROR_INTERNAL_13_REQUEST_DATA_NOT_MATCHED)
     else:

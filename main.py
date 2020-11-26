@@ -23,7 +23,11 @@ cors = CORS(app, resources={r"/alumnos/*": {"origins":"*"}})
 
 @app.route('/alumnos/<int:id>/notas', methods=['GET'])
 def getNotaMateriaToAlumnoIDByNombremateria(id):
-    return servicio.getNotamateriaToAlumnoIDbyNombreMateria(id,request.args)
+   
+    if request.args:
+        return servicio.getNotamateriaToAlumnoIDbyNombreMateria(id,request.args)
+    else:
+        return (servicio.getNotasMateriasByAlumnoID(id))
     
 #  Add subject
 @app.route('/alumnos/<int:alumnoid>/notas', methods=['POST'])
@@ -37,7 +41,7 @@ def getNotasMateriasByAlumnoIDToMateriaID(alumnoid,materiaid):
     return (servicio.getNotasMateriasToAlumnoIDbyNotaMateriaID(alumnoid,materiaid))
 
 #Get all notamaterias para un alumnoID
-'''@app.route('/alumnos/<int:alumnoid>/notas', methods=['GET'])
+''''@app.route('/alumnos/<int:alumnoid>/notas', methods=['GET'])
 def getNotasMateriasByAlumnoID(alumnoid):   
     return (servicio.getNotasMateriasByAlumnoID(alumnoid))'''
 
