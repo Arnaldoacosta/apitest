@@ -57,6 +57,10 @@ def deleteNotaMateria(alumnoid,notamateriaid):
 def updateNotaMateria(alumnoid,notamateriaid):
     return (servicio.updateNotaMateria(request,alumnoid,notamateriaid))
 
+@app.route('/saludo', methods=['GET'])
+def getCartel():    
+    return ('holaaa')
+
 @app.errorhandler(ApiExceptionServ)
 def handle_invalid_usage(error):
     response = jsonify(error.to_dict())
